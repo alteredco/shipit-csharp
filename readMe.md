@@ -7,6 +7,11 @@ Copyright 2010.
 
 ## Running the application
 
+### With JetBrainsRider
+To run the app via JetBrains Rider:
+This app uses .NetFramework rather than .NetCore and will require extensions to function in .NetCore environments.
+*Install Microsoft.NetFramework.Analyzers with NuGet
+
 ### With Visual Studio
 
 To run the app via Visual Studio:
