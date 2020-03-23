@@ -48,6 +48,7 @@ which backs this application.  These are available under `Services` -> `RDS` -> 
 -> `shipit`.
 
 ## Unit Tests
+Ensure MicrosoftVisualStudioQualityToolsUnitTestFramework 1.0.0 is installed.
 
 Run the tests in Visual Studio by right clicking on the `ShipItTest` project and
 choosing "Run Tests".
