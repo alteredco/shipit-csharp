@@ -37,6 +37,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <HintPath>..\packages\Castle.Core.4.3.1\lib\net40\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FakeItEasy, Version=6.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c">
+      <HintPath>..\packages\FakeItEasy.6.0.0\lib\net40\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\packages\MSTest.TestFramework.2.1.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
       <Private>True</Private>
@@ -101,6 +109,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockTests.cs" />
     <Compile Include="AbstractBaseTest.cs" />
+    <Compile Include="TruckServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShipIt\ShipIt.csproj">

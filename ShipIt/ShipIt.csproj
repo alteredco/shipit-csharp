@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -132,6 +133,7 @@
     <Compile Include="Models\ApiModels\AddProductsRequestModel.cs" />
     <Compile Include="Models\ApiModels\OrderLine.cs" />
     <Compile Include="Models\ApiModels\OutboundOrderRequestModel.cs" />
+    <Compile Include="Models\ApiModels\OutboundOrderResponse.cs" />
     <Compile Include="Models\ApiModels\ProductsRequestModel.cs" />
     <Compile Include="Filters\ShipItExceptionFilterAttribute.cs" />
     <Compile Include="Models\ApiModels\DataBaseRoles.cs" />
@@ -150,7 +152,6 @@
     <Compile Include="Models\ApiModels\Product.cs" />
     <Compile Include="Models\ApiModels\RemoveEmployeeRequest.cs" />
     <Compile Include="Models\ApiModels\StockAlteration.cs" />
-    <Compile Include="Models\ApiModels\Truck.cs" />
     <Compile Include="Models\DataModels\CompanyDataModel.cs" />
     <Compile Include="Models\DataModels\EmployeeDataModel.cs" />
     <Compile Include="Models\DataModels\ProductDataModel.cs" />

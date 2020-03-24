@@ -26,24 +26,11 @@ namespace ShipIt.Controllers
             this.truckService = truckService;
         }
 
-        public List<Truck> Post([FromBody]OutboundOrderRequestModel request)
+        public void Post([FromBody]OutboundOrderRequestModel request)
         {
             log.Info(String.Format("Processing outbound order: {0}", request));
-
-            var trucks = new List<Truck>();
-            var gtins = new List<String>();
-            foreach (var orderLine in request.OrderLines)
-            {
-                if (gtins.Contains(orderLine.gtin))
-                {
-                    throw new ValidationException(String.Format("Outbound order request contains duplicate product gtin: {0}", orderLine.gtin));
-                }
-                gtins.Add(orderLine.gtin);
-            }
-
-            var productDataModels = productRepository.GetProductsByGtin(gtins);
-            var products = productDataModels.ToDictionary(p => p.Gtin, p => new Product(p));
-
+            
+            var products = GetProductsFromRequest(request);
             var lineItems = new List<StockAlteration>();
             var productIds = new List<int>();
             var errors = new List<string>();
@@ -59,14 +46,6 @@ namespace ShipIt.Controllers
                     var product = products[orderLine.gtin];
                     lineItems.Add(new StockAlteration(product.Id, orderLine.quantity));
                     productIds.Add(product.Id);
-                    
-                    //as product is added to the order, a new truck is created with that product registered to the truck list
-                    var truck =new Truck();
-                    truck.totalWeight = product.Weight;
-                    truck.gtin = orderLine.gtin;
-                    truck.quantity = orderLine.quantity;
-                    truck.orderLine = orderLine.ToString();
-                    trucks.Add(truck);
                 }
             }
 
@@ -106,7 +85,25 @@ namespace ShipIt.Controllers
             }
 
             stockRepository.RemoveStock(request.WarehouseId, lineItems);
-            return trucks;
+            truckService.CreateTruckLoad(lineItems);
+        }
+
+        private Dictionary<string, Product> GetProductsFromRequest(OutboundOrderRequestModel request)
+        {
+            var trucks = new List<Truck>();
+            var gtins = new List<String>();
+            foreach (var orderLine in request.OrderLines)
+            {
+                if (gtins.Contains(orderLine.gtin))
+                {
+                    throw new ValidationException(String.Format("Outbound order request contains duplicate product gtin: {0}", orderLine.gtin));
+                }
+                gtins.Add(orderLine.gtin);
+            }
+
+            var productDataModels = productRepository.GetProductsByGtin(gtins);
+            var products = productDataModels.ToDictionary(p => p.Gtin, p => new Product(p));
+            return products;
         }
     }
 }
