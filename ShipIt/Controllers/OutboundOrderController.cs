@@ -7,6 +7,7 @@ using System.Web.UI.WebControls.WebParts;
 using ShipIt.Exceptions;
 using ShipIt.Models.ApiModels;
 using ShipIt.Repositories;
+using ShipIt.Services;
 
 namespace ShipIt.Controllers
 {
@@ -16,17 +17,20 @@ namespace ShipIt.Controllers
 
         private readonly IStockRepository stockRepository;
         private readonly IProductRepository productRepository;
+        private readonly ITruckService truckService;
 
-        public OutboundOrderController(IStockRepository stockRepository, IProductRepository productRepository)
+        public OutboundOrderController(IStockRepository stockRepository, IProductRepository productRepository, ITruckService truckService)
         {
             this.stockRepository = stockRepository;
             this.productRepository = productRepository;
+            this.truckService = truckService;
         }
 
-        public void Post([FromBody]OutboundOrderRequestModel request)
+        public List<Truck> Post([FromBody]OutboundOrderRequestModel request)
         {
             log.Info(String.Format("Processing outbound order: {0}", request));
 
+            var trucks = new List<Truck>();
             var gtins = new List<String>();
             foreach (var orderLine in request.OrderLines)
             {
@@ -55,6 +59,14 @@ namespace ShipIt.Controllers
                     var product = products[orderLine.gtin];
                     lineItems.Add(new StockAlteration(product.Id, orderLine.quantity));
                     productIds.Add(product.Id);
+                    
+                    //as product is added to the order, a new truck is created with that product registered to the truck list
+                    var truck =new Truck();
+                    truck.totalWeight = product.Weight;
+                    truck.gtin = orderLine.gtin;
+                    truck.quantity = orderLine.quantity;
+                    truck.orderLine = orderLine.ToString();
+                    trucks.Add(truck);
                 }
             }
 
@@ -94,6 +106,7 @@ namespace ShipIt.Controllers
             }
 
             stockRepository.RemoveStock(request.WarehouseId, lineItems);
+            return trucks;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
-   <PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>
@@ -150,6 +150,7 @@
     <Compile Include="Models\ApiModels\Product.cs" />
     <Compile Include="Models\ApiModels\RemoveEmployeeRequest.cs" />
     <Compile Include="Models\ApiModels\StockAlteration.cs" />
+    <Compile Include="Models\ApiModels\Truck.cs" />
     <Compile Include="Models\DataModels\CompanyDataModel.cs" />
     <Compile Include="Models\DataModels\EmployeeDataModel.cs" />
     <Compile Include="Models\DataModels\ProductDataModel.cs" />
@@ -166,13 +167,13 @@
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\StockRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Services\TruckService.cs" />
     <Compile Include="Startup\WindsorCompositionRoot.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Validators\BaseValidator.cs" />
     <Compile Include="Validators\ProductValidator.cs" />
     <Compile Include="Startup\WebApiConfig.cs" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

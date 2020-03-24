@@ -202,5 +202,16 @@ namespace ShipItTest
                 Assert.IsTrue(e.Message.Contains(GTIN));
             }
         }
+        
+        /*[Test]
+        public void TestListOfTrucks()
+        {
+            onSetUp();
+            var outboundOrder = new OutboundOrderRequestModel();
+            
+            var result = outboundOrderController.Post(outboundOrder);
+
+            Assert.IsNotNull(result);
+        }*/
     }
 }
