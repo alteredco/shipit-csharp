@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using ShipIt.Controllers;
 using ShipIt.Exceptions;
 using ShipIt.Models.ApiModels;
 using ShipIt.Repositories;
 using ShipItTest.Builders;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace ShipItTest
 {
+    [TestFixture]
     public class CompanyControllerTests : AbstractBaseTest
     {
         CompanyController companyController = new CompanyController(new CompanyRepository());

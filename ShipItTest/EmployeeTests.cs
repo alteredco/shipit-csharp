@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using ShipIt.Controllers;
 using ShipIt.Exceptions;
@@ -10,10 +9,10 @@ using ShipIt.Models.ApiModels;
 using ShipIt.Models.DataModels;
 using ShipIt.Repositories;
 using ShipItTest.Builders;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace ShipItTest
 {
+    [TestFixture]
     public class EmployeeControllerTests : AbstractBaseTest
     {
         EmployeeController employeeController = new EmployeeController(new EmployeeRepository());
@@ -93,7 +92,7 @@ namespace ShipItTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TestAddEmployees()
         {
             onSetUp();
@@ -108,7 +107,7 @@ namespace ShipItTest
             Assert.IsTrue(EmployeesAreEqual(new Employee(databaseEmployee), correctDatabaseEmploye));
         }
 
-        [TestMethod]
+        [Test]
         public void TestDeleteEmployees()
         {
             onSetUp();
@@ -129,7 +128,7 @@ namespace ShipItTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TestDeleteNonexistentEmployee()
         {
             onSetUp();
@@ -146,7 +145,7 @@ namespace ShipItTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TestAddDuplicateEmployee()
         {
             onSetUp();

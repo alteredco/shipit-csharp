@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using ShipIt.Controllers;
 using ShipIt.Exceptions;
@@ -9,10 +8,10 @@ using ShipIt.Models.DataModels;
 using ShipIt.Parsers;
 using ShipIt.Repositories;
 using ShipItTest.Builders;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace ShipItTest
 {
+    [TestFixture]
     public class ProductControllerTests : AbstractBaseTest
     {
         ProductController productController = new ProductController(new ProductRepository());
