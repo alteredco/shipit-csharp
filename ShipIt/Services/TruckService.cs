@@ -20,7 +20,10 @@ namespace ShipIt.Services
         }
         public IEnumerable<Truck> CreateTruckLoad(List<StockAlteration> lineItems)
         {
-            var batches = new List<Batch>();
+            var truckList = new List<Truck>
+            {
+                new Truck()
+            };
 
             foreach (var item in lineItems)
             {
@@ -32,34 +35,29 @@ namespace ShipIt.Services
                     Quantity = item.Quantity,
                     ItemWeight = product.Weight
                 };
-                batches.Add(batch);
-            }
-            
-            var truckBatch = GetFilledBatches(batches);
-            
-            return new List<Truck>
-            {
-                new Truck
+                var openTruck = GetOpenTruck(truckList, batch);
+
+                if (openTruck != null)
                 {
-                    Batches = truckBatch
+                    openTruck.Batches.Add(batch);
                 }
-            };
+                else
+                {
+                    var newTruck = new Truck();
+                    newTruck.Batches.Add(batch);
+                    truckList.Add(newTruck);
+                }
+            }
+
+            return truckList;
         }
 
-        private List<Batch> GetFilledBatches(List<Batch> batchList)
+        private Truck GetOpenTruck(List<Truck> truckList, Batch batch)
         {
-            var openBatches = new List<Batch>();
-            var openBatchesWeight = openBatches.Sum(batch => batch.TotalWeight);
+            var maxCapacity = 2000;
+            var openTruck = truckList.FirstOrDefault(truck => truck.TotalWeight + batch.TotalWeight < maxCapacity);
 
-            foreach (var batch in batchList)
-            {
-                if (batch.TotalWeight < 2000 && openBatchesWeight <= 2000)
-                {
-                    openBatches.Add(batch);
-                }
-                //need something for overflow here
-            }
-            return openBatches;
+            return openTruck;
         }
     }
 }

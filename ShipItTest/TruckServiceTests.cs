@@ -23,11 +23,19 @@ namespace ShipItTest
         };
 
         private readonly ProductDataModel TestProduct2 = new ProductDataModel
+                  {
+                      Id = 9,
+                      Weight = 300,
+                      Name = "Test Item2",
+                      Gtin = "Test Id2"
+                  };
+        
+        private readonly ProductDataModel TestProduct3 = new ProductDataModel
         {
-            Id = 9,
-            Weight = 300,
-            Name = "Test Item2",
-            Gtin = "Test Id2"
+            Id = 1,
+            Weight = 3000,
+            Name = "Test Item3",
+            Gtin = "Test Id3"
         };
 
         [SetUp]
@@ -37,6 +45,7 @@ namespace ShipItTest
             _productRepository = A.Fake<IProductRepository>();
             A.CallTo(() => _productRepository.GetProductById(17)).Returns(TestProduct1);
             A.CallTo(() => _productRepository.GetProductById(9)).Returns(TestProduct2);
+            A.CallTo(() => _productRepository.GetProductById(9)).Returns(TestProduct3);
             _truckService = new TruckService(_productRepository);
         }
 
@@ -76,6 +85,25 @@ namespace ShipItTest
             Assert.AreEqual(truckList[0].Batches[0].Name, "Test Item");
             Assert.AreEqual(truckList[0].Batches[1].Name, "Test Item2");
         }
+        
+        [Test]
+        public void WhenTruckCapacityReachedBatchPutOnNewTruck()
+        {
+            var lineItems = new List<StockAlteration>
+            {
+                new StockAlteration(17, 10),
+                new StockAlteration(9, 4)
+            };
 
+            var trucks = _truckService.CreateTruckLoad(lineItems);
+            var truckList = trucks.ToList();
+            
+            Assert.AreEqual(truckList.Count, 2);
+            Assert.AreEqual(truckList[0].TotalWeight, 1000);
+            Assert.AreEqual(truckList[1].TotalWeight, 1200);
+            Assert.AreEqual(truckList[0].Batches.Count, 1);
+            Assert.AreEqual(truckList[0].Batches[0].Name, "Test Item");
+            Assert.AreEqual(truckList[1].Batches[0].Name, "Test Item2");
+        }
     }
 }
