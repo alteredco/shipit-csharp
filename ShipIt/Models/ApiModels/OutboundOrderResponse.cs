@@ -12,7 +12,7 @@ namespace ShipIt.Models.ApiModels
     public class Truck
     {
         public double TotalWeight => Batches.Sum(batch => batch.TotalWeight);
-        public List<Batch> Batches { get; set; }
+        public List<Batch> Batches { get; set; } = new List<Batch>();
     }
 
     public class Batch

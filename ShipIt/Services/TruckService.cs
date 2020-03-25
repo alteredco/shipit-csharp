@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ShipIt.Models.ApiModels;
 using ShipIt.Repositories;
 
@@ -19,7 +20,10 @@ namespace ShipIt.Services
         }
         public IEnumerable<Truck> CreateTruckLoad(List<StockAlteration> lineItems)
         {
-            var batches = new List<Batch>();
+            var truckList = new List<Truck>
+            {
+                new Truck()
+            };
 
             foreach (var item in lineItems)
             {
@@ -31,16 +35,29 @@ namespace ShipIt.Services
                     Quantity = item.Quantity,
                     ItemWeight = product.Weight
                 };
-                batches.Add(batch);
-            }
-            
-            return new List<Truck>
-            {
-                new Truck
+                var openTruck = GetOpenTruck(truckList, batch);
+
+                if (openTruck != null)
                 {
-                    Batches =  batches
+                    openTruck.Batches.Add(batch);
                 }
-            };
+                else
+                {
+                    var newTruck = new Truck();
+                    newTruck.Batches.Add(batch);
+                    truckList.Add(newTruck);
+                }
+            }
+
+            return truckList;
+        }
+
+        private Truck GetOpenTruck(List<Truck> truckList, Batch batch)
+        {
+            var maxCapacity = 2000;
+            var openTruck = truckList.FirstOrDefault(truck => truck.TotalWeight + batch.TotalWeight < maxCapacity);
+
+            return openTruck;
         }
     }
 }
