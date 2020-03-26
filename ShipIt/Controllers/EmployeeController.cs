@@ -28,13 +28,14 @@ namespace ShipIt.Controllers
         {
             log.Info(String.Format("Looking up employee by name: {0}", name));
 
-            var employee = new Employee(employeeRepository.GetEmployeeByName(name));
+            var employees = employeeRepository.GetEmployeesByName(name)
+                .Select(employeeData =>new Employee(employeeData));
 
-            log.Info("Found employee: " + employee);
-            return new EmployeeResponse(employee);
+            log.Info("Found employees: " + employees);
+            return new EmployeeResponse(employees);
         }
         
-        /*public EmployeeResponse Get(int employeeId)
+        public EmployeeResponse GetById(int employeeId)
         {
             log.Info(String.Format("Looking up employee by id: {0}", employeeId));
 
@@ -42,8 +43,7 @@ namespace ShipIt.Controllers
 
             log.Info("Found employee: " + employee);
             return new EmployeeResponse(employee);
-        }*/
-
+        }
 
         public EmployeeResponse Get(int warehouseId)
         {
