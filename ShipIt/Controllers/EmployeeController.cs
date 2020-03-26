@@ -33,6 +33,17 @@ namespace ShipIt.Controllers
             log.Info("Found employee: " + employee);
             return new EmployeeResponse(employee);
         }
+        
+        /*public EmployeeResponse Get(int employeeId)
+        {
+            log.Info(String.Format("Looking up employee by id: {0}", employeeId));
+
+            var employee = new Employee(employeeRepository.GetEmployeeByEmployeeId(employeeId));
+
+            log.Info("Found employee: " + employee);
+            return new EmployeeResponse(employee);
+        }*/
+
 
         public EmployeeResponse Get(int warehouseId)
         {

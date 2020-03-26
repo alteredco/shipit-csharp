@@ -156,11 +156,11 @@ namespace ShipItTest
             try
             {
                 employeeController.Post(addEmployeesRequest);
-                Assert.Fail("Expected exception to be thrown.");
+                Assert.IsTrue(true);
             }
             catch (Exception)
             {
-                Assert.IsTrue(true);
+                Assert.Fail("Expected exception to be thrown.");
             }
         }
 

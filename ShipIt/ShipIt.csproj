@@ -102,6 +102,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddEmployeeIdSQLScript" />
     <Content Include="connections.config" />
     <Content Include="log4net.config" />
     <None Include="packages.config" />
